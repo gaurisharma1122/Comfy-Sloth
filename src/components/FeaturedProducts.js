@@ -1,8 +1,37 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useProductsContext } from '../context/products_context'
+import Loading from './Loading';
+import Error from './Error';
+import Product from './Product';
 
 const FeaturedProducts = () => {
-    return <h4>featured products</h4>
+    const { state }= useProductsContext();
+    const { products_loading, products_error, featured_products }= state;
+
+    if(products_loading){
+        return <Loading/>
+    }
+    if(products_error){
+        return <Error/>
+    }
+    return (
+        <Wrapper className='section'>
+            <div className="title">
+                <h2>Featured Products</h2>
+                <div className="underline"></div>
+            </div>
+            <div className="section-center featured">
+                {
+                    featured_products.map((product)=>{
+                        return (
+                            <Product key={product.id} { ...product}/>
+                        )
+                    })
+                }
+            </div>
+        </Wrapper>
+    )
   }
   
   const Wrapper = styled.section`
