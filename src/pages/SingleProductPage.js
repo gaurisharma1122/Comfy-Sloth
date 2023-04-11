@@ -45,12 +45,12 @@ const SingleProductPage = () => {
         <div className="section section-center page">
           <Link to="/products" className='btn'>back to products</Link>
           <div className="product-center">
-            <ProductImages/>
+            <ProductImages images={images}/>
 
             <section className="content">
 
               <h2>{name}</h2>
-              <Stars/>
+              <Stars stars={stars} reviews={reviews} />
               <h5 className="price">$ {price}</h5>
               <p className="desc">{description}</p>
 
@@ -66,7 +66,7 @@ const SingleProductPage = () => {
               <hr/>
 
               {
-                stock>0 && <AddToCart/>
+                stock>0 && <AddToCart product={single_product}/>
               }
 
             </section>

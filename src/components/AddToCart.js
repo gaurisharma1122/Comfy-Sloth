@@ -1,11 +1,62 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { FaCheck } from "react-icons/fa"
+import AmountButtons from './AmountButtons';
+import { Link } from 'react-router-dom';
 
-const AddToCart = () => {
-    return <h4>addToCart </h4>
-  }
-  
-  const Wrapper = styled.section`
+const AddToCart = ({ product }) => {
+  const { id, stock, colors } = product;
+  const [mainColor, setMainColor] = useState(colors[0]);
+  const [amount, setAmount]= useState(1);
+
+  const increase= ()=>{
+    setAmount((oldAmount)=>{
+      let tempAmount= oldAmount + 1;
+      if(tempAmount>stock){
+        tempAmount= stock;
+      }
+      return tempAmount;
+    })
+  };
+  const decrease= ()=>{
+    setAmount((oldAmount)=>{
+      let tempAmount= oldAmount-1;
+      if(tempAmount<1){
+        tempAmount = 1;
+      }
+      return tempAmount;
+    })
+
+  };
+
+  return (
+    <Wrapper>
+      <div className="colors">
+        <span>Colors :</span>
+        <div>
+          {
+            colors.map((item, index) => {
+              return (
+                <button key={index}
+                  style={{ backgroundColor: item }}
+                  className={mainColor === item ? 'active color-btn' : 'color-btn'}
+                  onClick={() => setMainColor(item)}>
+                  {mainColor === item && <FaCheck />}
+                </button>
+              )
+            })
+          }
+        </div>
+      </div>
+      <div className="btn-containers">
+          <AmountButtons amount={amount} increase={increase} decrease={decrease}/>
+          <Link to="/cart" className='btn'>add to cart</Link>
+      </div>
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.section`
     margin-top: 2rem;
     .colors {
       display: grid;
@@ -49,4 +100,4 @@ const AddToCart = () => {
       width: 140px;
     }
   `
-  export default AddToCart
+export default AddToCart
