@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { filter_reducer } from "../reducers/filter_reducer";
 import { useProductsContext } from "./products_context";
-import { LOAD_PRODUCTS, SET_GRIDVIEW, SET_LISTVIEW, UPDATE_SORT } from "../actions";
+import { LOAD_PRODUCTS, SET_GRIDVIEW, SET_LISTVIEW, UPDATE_SORT, SORT_PRODUCTS } from "../actions";
 
 const FilterContext= createContext();
 
@@ -33,6 +33,10 @@ const FilterProvider= ({ children })=>{
     useEffect(()=>{
         dispatch({ type: LOAD_PRODUCTS, payload: products });
     }, [products]);
+
+    useEffect(()=>{
+        dispatch({ type: SORT_PRODUCTS });
+    }, [products, state.sort]);
 
     return (
         <FilterContext.Provider value={{ state, dispatch, set_gridview, set_listview, updateSort }}>
