@@ -4,7 +4,10 @@ export const filter_reducer= (state, action)=>{
     switch(action.type){
         case LOAD_PRODUCTS:
             {
-                return { ...state, all_products: action.payload, filtered_products: action.payload };
+                let prices= action.payload.map((p)=> p.price);
+                let maxPrice= Math.max(...prices);
+                return { ...state, all_products: action.payload, filtered_products: action.payload,
+                    filters: { ...state.filters, max_price: maxPrice, price: maxPrice } };
             };
             break;
         case SET_GRIDVIEW:
