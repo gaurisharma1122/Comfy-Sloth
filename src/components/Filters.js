@@ -1,11 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useFilterContext } from '../context/filter_context'
 
 const Filters = () => {
-    return <h4>filters</h4>
-  }
-  
-  const Wrapper = styled.section`
+  const { state } = useFilterContext();
+  const { filters: { text, category, company, color, min_price, price, max_price, shipping },
+    all_products,
+    updateFilters,
+    clearFilters } = state;
+
+  return (
+    <Wrapper>
+      <div className="content">
+        <form onSubmit={(e)=> e.preventDefault()}>
+          <div className="form-control">
+            <input type="text" name="text" placeholder='Search' className='search-input' value={text}  onChange={updateFilters} />
+          </div>
+        </form>
+      </div>
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.section`
     .form-control {
       margin-bottom: 1.25rem;
       h5 {
@@ -103,5 +120,5 @@ const Filters = () => {
       }
     }
   `
-  
-  export default Filters
+
+export default Filters

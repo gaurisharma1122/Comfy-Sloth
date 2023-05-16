@@ -6,7 +6,6 @@ import { BsFillGridFill, BsList } from "react-icons/bs"
 const Sort = () => {
     const { state, set_gridview, set_listview, updateSort }= useFilterContext();
     const { filtered_products, grid_view, sort }= state;
-    console.log(sort)
     return (
         <Wrapper>
             <div className="btn-container">

@@ -2,26 +2,33 @@ import React from 'react'
 import styled from 'styled-components'
 import { useCartContext } from '../context/cart_context'
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../context/user_context';
 
 const CartTotals = () => {
-    const { state }= useCartContext();
-    const { total_amount, shipping_fee }= state;
-    return (
-        <Wrapper>
-            <div>
-                <article>
-                    <h5>Subtotal: <span>$ {total_amount}</span></h5>
-                    <p>Shipping Fee: <span>$ {shipping_fee}</span></p>
-                    <hr />
-                    <h4>Order Total: <span>{total_amount + shipping_fee}</span></h4>
-                </article>
-                <Link to="/checkout" className='btn'>Proceed to Checkout</Link>
-            </div>
-        </Wrapper>
-    )
-  }
-  
-  const Wrapper = styled.section`
+  const { state } = useCartContext();
+  const { total_amount, shipping_fee } = state;
+  const { myUser, loginWithRedirect } = useUserContext();
+  return (
+    <Wrapper>
+      <div>
+        <article>
+          <h5>Subtotal: <span>$ {total_amount}</span></h5>
+          <p>Shipping Fee: <span>$ {shipping_fee}</span></p>
+          <hr />
+          <h4>Order Total: <span>{total_amount + shipping_fee}</span></h4>
+        </article>
+        {
+          myUser ?
+            <Link to="/checkout" className='btn'>Proceed to Checkout</Link>:
+            <button className='btn' onClick={loginWithRedirect}>Login</button>
+        }
+
+      </div>
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.section`
     margin-top: 3rem;
     display: flex;
     justify-content: center;
@@ -52,5 +59,5 @@ const CartTotals = () => {
       font-weight: 700;
     }
   `
-  
-  export default CartTotals
+
+export default CartTotals
